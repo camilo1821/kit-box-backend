@@ -2,6 +2,7 @@ package com.kit_box.ecommerce.model;
 
 import jakarta.persistence.*;
 
+import java.time.LocalDate;
 import java.time.LocalDateTime;
 
 @Entity
@@ -21,6 +22,9 @@ public class Pedido {
     @Column(nullable=false)
     private LocalDateTime fecha_pedido;
 
+    @Column(nullable=false)
+    private String estado;
+
     @ManyToOne(fetch=FetchType.LAZY)
     @JoinColumn(name="cliente_id", nullable = false)
     private Long cliente_id;
@@ -28,14 +32,22 @@ public class Pedido {
     public Pedido() {
     }
 
-    public Pedido(Long id, double total_pedido, String direccion_entrega,
+    public Pedido(double totalPedido, String direccionEntrega, LocalDateTime fechaPedido, Long clienteId) {
+        this.total_pedido = total_pedido;
+        this.direccion_entrega = direccion_entrega;
+        this.fecha_pedido = fecha_pedido;
+        this.cliente_id = cliente_id;
+    }
+
+   /* public Pedido(Long id, double total_pedido, String direccion_entrega,
                   LocalDateTime fecha_pedido, Long cliente_id) {
         this.id = id;
         this.total_pedido = total_pedido;
         this.direccion_entrega = direccion_entrega;
         this.fecha_pedido = fecha_pedido;
         this.cliente_id = cliente_id;
-    }
+    }*/
+
 
     // GETTERS & SETTERS
 
