@@ -44,20 +44,19 @@ public class ProductoController {
     }
 
 
-    public Optional<Producto> findById(Long id) {
-        return productoRepository.findById(id);
+    public Optional<ProductoDto> findById(@PathVariable Long id) {
+        return productoService.findById(id)
+                .map(ProductoDto::fromEntity);
     }
 
 
-    public List<Producto> findByName(String nombre) {
+    /*public List<Producto> findByName(String nombre) {
         return productoRepository.findByNombreIgnoreCase(nombre);
-    }
+    } */
 
-
-    public void delete(Long id) {
-        if(!productoRepository.existsById(id)){
-            throw new RuntimeException("Producto no encontrado con id "+ id);
-        }productoRepository.deleteById(id);
+    @DeleteMapping("/{id}")
+    public void delete(@PathVariable Long id) {
+    productoService.delete(id);
 
     }
 
