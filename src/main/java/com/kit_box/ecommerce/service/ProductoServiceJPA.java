@@ -3,6 +3,8 @@ package com.kit_box.ecommerce.service;
 import com.kit_box.ecommerce.model.Producto;
 import com.kit_box.ecommerce.repository.ProductoRepository;
 import org.springframework.beans.factory.annotation.Autowired;
+import org.springframework.data.domain.Page;
+import org.springframework.data.domain.Pageable;
 import org.springframework.stereotype.Service;
 
 import java.util.List;
@@ -36,10 +38,11 @@ public class ProductoServiceJPA implements ProductoService{
         return productoRepository.save(productoExistente);
     }
 
-    
+
+
     @Override
-    public List<Producto> findAll() {
-        return productoRepository.findAll();
+    public Page<Producto> findAll(Pageable pageable) {
+        return productoRepository.findAll(pageable);
     }
 
     @Override

@@ -4,6 +4,7 @@ import com.kit_box.ecommerce.dto.ProductoDto;
 import com.kit_box.ecommerce.model.Producto;
 import com.kit_box.ecommerce.service.ProductoService;
 import org.springframework.beans.factory.annotation.Autowired;
+import org.springframework.data.domain.Page;
 import org.springframework.data.domain.Pageable;
 import org.springframework.data.web.PageableDefault;
 import org.springframework.web.bind.annotation.*;
@@ -35,24 +36,24 @@ public class ProductoController {
     }
 
     @GetMapping
-    public List<ProductoDto> findAll(@PageableDefault(size = 12,sort="id") Pageable pageable) {
+    public Page<ProductoDto> findAll(@PageableDefault(size = 12,sort="id") Pageable pageable) {
         return productoService.findAll(pageable)
-                .getContent()
-                .Stream()
-                .map(ProductoDto::fromEntity)
-                .collect(Collectors.toList());
+                .map(ProductoDto::fromEntity);
     }
 
-
+    @GetMapping("/{id}")
     public Optional<ProductoDto> findById(@PathVariable Long id) {
         return productoService.findById(id)
                 .map(ProductoDto::fromEntity);
     }
 
-
-    /*public List<Producto> findByName(String nombre) {
-        return productoRepository.findByNombreIgnoreCase(nombre);
-    } */
+    @GetMapping("/buscar/{nombre}")
+    public List<ProductoDto> findByName(@PathVariable String nombre) {
+        return productoService.findByName(nombre)
+                .stream()
+                .map(ProductoDto::fromEntity)
+                .collect(Collectors.toList());
+    }
 
     @DeleteMapping("/{id}")
     public void delete(@PathVariable Long id) {
