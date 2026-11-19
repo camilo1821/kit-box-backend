@@ -8,18 +8,19 @@ import com.kit_box.ecommerce.repository.DetallePedidoRepository;
 import com.kit_box.ecommerce.repository.PedidoRepository;
 import com.kit_box.ecommerce.repository.ProductoRepository;
 import jakarta.persistence.EntityNotFoundException;
+import org.springframework.beans.factory.annotation.Autowired;
 import org.springframework.stereotype.Service;
 import org.springframework.transaction.annotation.Transactional;
 
 import java.util.List;
 
 @Service
-public class DetallePedidoServiceJPA /*implements DetallePedidoService*/ {
-/*
+public class DetallePedidoServiceJPA implements DetallePedidoService {
+
     private final DetallePedidoRepository detallePedidoRepository;
     private final ProductoRepository productoRepository;
     private final PedidoRepository pedidoRepository;
-
+    @Autowired
     public DetallePedidoServiceJPA(DetallePedidoRepository detallePedidoRepository,
                                    ProductoRepository productoRepository,
                                    PedidoRepository pedidoRepository) {
@@ -28,7 +29,7 @@ public class DetallePedidoServiceJPA /*implements DetallePedidoService*/ {
         this.pedidoRepository = pedidoRepository;
     }
 
-    @Override
+   @Override
     @Transactional(readOnly = true)
     public List<DetallePedidoDTO> listarTodos() {
         return detallePedidoRepository.findAll()
@@ -142,5 +143,5 @@ public class DetallePedidoServiceJPA /*implements DetallePedidoService*/ {
 
         pedido.setTotal_pedido(total);
         pedidoRepository.save(pedido);
-    }*/
+    }
 }
