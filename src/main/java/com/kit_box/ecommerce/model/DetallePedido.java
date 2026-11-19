@@ -9,7 +9,7 @@ public class DetallePedido {
     @Id
     @GeneratedValue(strategy = GenerationType.IDENTITY)
     @Column(name = "id_detalle_pedido")
-    private Long id_detalle_pedido;
+    private Long idDetallePedido;
 
     @ManyToOne(fetch = FetchType.LAZY)
     @JoinColumn(name = "producto_id", nullable = false)
@@ -23,24 +23,24 @@ public class DetallePedido {
     private int cantidad;
 
     @Column(name = "precio_total", nullable = false)
-    private double precio_total;
+    private double precioTotal;
 
     public DetallePedido() {
     }
 
-    public DetallePedido(Producto producto, Pedido pedido, int cantidad, double precio_total) {
+    public DetallePedido(Producto producto, Pedido pedido, int cantidad, double precioTotal) {
         this.producto = producto;
         this.pedido = pedido;
         this.cantidad = cantidad;
-        this.precio_total = precio_total;
+        this.precioTotal = precioTotal;
     }
 
-    public Long getId_detalle_pedido() {
-        return id_detalle_pedido;
+    public Long getIdDetallePedido() {
+        return idDetallePedido;
     }
 
-    public void setId_detalle_pedido(Long id_detalle_pedido) {
-        this.id_detalle_pedido = id_detalle_pedido;
+    public void setIdDetallePedido(Long idDetallePedido) {
+        this.idDetallePedido = idDetallePedido;
     }
 
     public Producto getProducto() {
@@ -67,11 +67,11 @@ public class DetallePedido {
         this.cantidad = cantidad;
     }
 
-    public double getPrecio_total() {
-        return precio_total;
+    public double getPrecioTotal() {
+        return precioTotal;
     }
 
-    public void setPrecio_total(double precio_total) {
-        this.precio_total = precio_total;
+    public void setPrecioTotal(double precioTotal) {
+        this.precioTotal = precioTotal;
     }
 }

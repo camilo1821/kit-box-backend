@@ -4,30 +4,37 @@ import com.kit_box.ecommerce.model.DetallePedido;
 
 public class DetallePedidoDTO {
 
-    private Long producto_id;
+    private Long productoId;
     private Integer cantidad;
 
     public DetallePedidoDTO() {
     }
 
-    public DetallePedidoDTO(Long producto_id, Integer cantidad) {
-        this.producto_id = producto_id;
+    public DetallePedidoDTO(Long productoId, Integer cantidad) {
+        this.productoId= productoId;
         this.cantidad = cantidad;
     }
 
     public static DetallePedidoDTO fromEntity(DetallePedido detallePedido) {
+        //Validacion para pedido null
+        if (detallePedido == null) {
+            return null;
+        }
+        Long prodId = (detallePedido.getProducto() != null)
+                ? detallePedido.getProducto().getId()
+                : null;
         return new DetallePedidoDTO(
-                detallePedido.getProducto().getId(),
+                prodId,
                 detallePedido.getCantidad()
         );
     }
 
-    public Long getProducto_id() {
-        return producto_id;
+    public Long getProductoId() {
+        return productoId;
     }
 
-    public void setProducto_id(Long producto_id) {
-        this.producto_id = producto_id;
+    public void setProductoId(Long productoId) {
+        this.productoId= productoId;
     }
 
     public Integer getCantidad() {
