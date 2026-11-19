@@ -1,5 +1,7 @@
 package com.kit_box.ecommerce.dto;
 
+import com.kit_box.ecommerce.model.DetallePedido;
+
 public class DetallePedidoDTO {
 
     private Long producto_id;
@@ -11,6 +13,13 @@ public class DetallePedidoDTO {
     public DetallePedidoDTO(Long producto_id, Integer cantidad) {
         this.producto_id = producto_id;
         this.cantidad = cantidad;
+    }
+
+    public static DetallePedidoDTO fromEntity(DetallePedido detallePedido) {
+        return new DetallePedidoDTO(
+                detallePedido.getProducto().getId(),
+                detallePedido.getCantidad()
+        );
     }
 
     public Long getProducto_id() {
