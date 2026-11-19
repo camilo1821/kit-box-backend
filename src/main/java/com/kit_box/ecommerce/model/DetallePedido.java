@@ -3,33 +3,34 @@ package com.kit_box.ecommerce.model;
 import jakarta.persistence.*;
 
 @Entity
-@Table(name="detalle_pedido")
+@Table(name = "detalle_pedido")
 public class DetallePedido {
 
     @Id
     @GeneratedValue(strategy = GenerationType.IDENTITY)
+    @Column(name = "id_detalle_pedido")
     private Long id_detalle_pedido;
 
     @ManyToOne(fetch = FetchType.LAZY)
-    @JoinColumn(name="producto_id", nullable=false)
-    private Long producto_id;
+    @JoinColumn(name = "producto_id", nullable = false)
+    private Producto producto;
 
     @ManyToOne(fetch = FetchType.LAZY)
-    @JoinColumn(name ="pedido_id", nullable=false)
-    private Long pedido_id;
+    @JoinColumn(name = "pedido_id", nullable = false)
+    private Pedido pedido;
 
-    @Column(name="cantidad", nullable=false)
+    @Column(name = "cantidad", nullable = false)
     private int cantidad;
 
-    @Column(name="precio_total", nullable=false)
+    @Column(name = "precio_total", nullable = false)
     private double precio_total;
 
     public DetallePedido() {
     }
 
-    public DetallePedido(Long producto_id, Long pedido_id, int cantidad, double precio_total) {
-        this.producto_id = producto_id;
-        this.pedido_id = pedido_id;
+    public DetallePedido(Producto producto, Pedido pedido, int cantidad, double precio_total) {
+        this.producto = producto;
+        this.pedido = pedido;
         this.cantidad = cantidad;
         this.precio_total = precio_total;
     }
@@ -42,20 +43,20 @@ public class DetallePedido {
         this.id_detalle_pedido = id_detalle_pedido;
     }
 
-    public Long getProducto_id() {
-        return producto_id;
+    public Producto getProducto() {
+        return producto;
     }
 
-    public void setProducto_id(Long producto_id) {
-        this.producto_id = producto_id;
+    public void setProducto(Producto producto) {
+        this.producto = producto;
     }
 
-    public Long getPedido_id() {
-        return pedido_id;
+    public Pedido getPedido() {
+        return pedido;
     }
 
-    public void setPedido_id(Long pedido_id) {
-        this.pedido_id = pedido_id;
+    public void setPedido(Pedido pedido) {
+        this.pedido = pedido;
     }
 
     public int getCantidad() {

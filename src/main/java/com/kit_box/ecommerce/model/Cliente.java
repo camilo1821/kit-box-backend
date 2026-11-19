@@ -1,10 +1,10 @@
+
 package com.kit_box.ecommerce.model;
 
 import jakarta.persistence.*;
 
 import java.time.LocalDateTime;
 import java.util.List;
-
 
 @Entity
 @Table(name = "cliente")
@@ -56,16 +56,8 @@ public class Cliente {
     this.rol = rol;
     this.direccion = direccion;
   }
-  // METODO PARA GENERAR LA FECHA AUTOMÁTICAMENTE
 
-  @PrePersist
-  protected void antesDeGuardar() {
-    this.fechaRegistro = LocalDateTime.now();
-  }
-
-
-
-  // setter y getter
+  // GETTERS Y SETTERS
 
   public Long getId() {
     return id;
