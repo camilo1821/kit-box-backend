@@ -11,6 +11,8 @@ import org.springframework.web.bind.annotation.*;
 
 import java.util.List;
 
+import static com.kit_box.ecommerce.dto.ClienteDto.fromEntity;
+
 @RestController
 @RequestMapping("/api/cliente")
 public class ClienteController {
@@ -23,16 +25,9 @@ public class ClienteController {
 
   // REGISTRAR CLIENTE
   @PostMapping
-  public ResponseEntity<ClienteDto> save(@RequestBody ClienteDto clienteDto) {
+  public ResponseEntity<Cliente> save( Cliente cliente) {
 
-    Cliente cliente = clienteDto.toEntity();
-
-    Cliente clienteGuardado = clienteService.save(cliente);
-
-    return new ResponseEntity<>(
-        toDto(clienteGuardado),
-        HttpStatus.CREATED
-    );
+   return ResponseEntity.ok().body(clienteService.save(cliente));
   }
 
   // ACTUALIZAR CLIENTE
@@ -49,7 +44,7 @@ public class ClienteController {
       return ResponseEntity.notFound().build();
     }
 
-    return ResponseEntity.ok(toDto(clienteActualizado));
+    return ResponseEntity.ok(fromEntity(clienteActualizado));
   }
 
   // CONSULTAR TODOS LOS CLIENTES
@@ -58,7 +53,7 @@ public class ClienteController {
 
     List<ClienteDto> clientes = clienteService.findAll()
         .stream()
-        .map(this::toDto)
+        .map(ClienteDto::fromEntity)
         .toList();
 
     return ResponseEntity.ok(clientes);
@@ -69,7 +64,7 @@ public class ClienteController {
   public ResponseEntity<ClienteDto> findById(@PathVariable Long id) {
 
     return clienteService.findById(id)
-        .map(cliente -> ResponseEntity.ok(toDto(cliente)))
+        .map(cliente -> ResponseEntity.ok(fromEntity(cliente)))
         .orElse(ResponseEntity.notFound().build());
   }
 
@@ -79,7 +74,7 @@ public class ClienteController {
       @PathVariable String correo) {
 
     return clienteService.findByEmail(correo)
-        .map(cliente -> ResponseEntity.ok(toDto(cliente)))
+        .map(cliente -> ResponseEntity.ok(fromEntity(cliente)))
         .orElse(ResponseEntity.notFound().build());
   }
 
@@ -96,18 +91,5 @@ public class ClienteController {
     return ResponseEntity.noContent().build();
   }
 
-  // CONVERTIR ENTITY A DTO
-  private ClienteDto toDto(Cliente cliente) {
 
-    return new ClienteDto(
-        cliente.getId(),
-        cliente.getNombre(),
-        cliente.getApellido(),
-        cliente.getCorreo(),
-        cliente.getTelefono(),
-        cliente.getRol(),
-        cliente.getDireccion(),
-        cliente.getFechaRegistro()
-    );
-  }
 }

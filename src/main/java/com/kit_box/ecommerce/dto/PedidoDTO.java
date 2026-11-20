@@ -12,19 +12,19 @@ public class PedidoDTO {
     private double total_pedido;
     private String direccion_entrega;
     private LocalDateTime fecha_pedido;
-    private Cliente cliente_id;
+    private Cliente cliente;
 
     public PedidoDTO() {
     }
 
     public PedidoDTO(Long id, double total_pedido,
                      String direccion_entrega,
-                     LocalDateTime fecha_pedido,  Cliente cliente_id) {
+                     LocalDateTime fecha_pedido,  Cliente cliente) {
         this.id = id;
         this.total_pedido = total_pedido;
         this.direccion_entrega = direccion_entrega;
         this.fecha_pedido = fecha_pedido;
-        this.cliente_id = cliente_id;
+        this.cliente = cliente;
     }
 
     public static PedidoDTO fromEntity(Pedido pedido){
@@ -33,12 +33,12 @@ public class PedidoDTO {
                 pedido.getTotal_pedido(),
                 pedido.getDireccion_entrega(),
                 pedido.getFecha_pedido(),
-                pedido.getCliente_id()
+                pedido.getCliente()
         );
     }
 
     public Pedido toEntity() {
-        return new Pedido(this.total_pedido, this.direccion_entrega, this.fecha_pedido, this.cliente_id);
+        return new Pedido(this.total_pedido, this.direccion_entrega, this.fecha_pedido, this.cliente);
     }
 
     // GETTERS & SETTERS

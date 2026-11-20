@@ -2,8 +2,10 @@
 package com.kit_box.ecommerce.model;
 
 import jakarta.persistence.*;
+import org.hibernate.annotations.CreationTimestamp;
 
 import java.time.LocalDateTime;
+import java.util.ArrayList;
 import java.util.List;
 
 @Entity
@@ -17,7 +19,7 @@ public class Cliente {
   @Column(nullable = false, length = 100)
   private String nombre;
 
-  @Column(nullable = false, length = 100)
+  @Column(nullable = true, length = 100)
   private String apellido;
 
   @Column(nullable = false, unique = true, length = 150)
@@ -26,7 +28,7 @@ public class Cliente {
   @Column(length = 20)
   private String telefono;
 
-  @Column(nullable = false, length = 255)
+  @Column(nullable = true, length = 255)
   private String contrasenia;
 
   @Column(nullable = false, length = 50)
@@ -35,11 +37,12 @@ public class Cliente {
   @Column(length = 255)
   private String direccion;
 
+  @CreationTimestamp
   @Column(name = "fecha_registro", nullable = false, updatable = false)
   private LocalDateTime fechaRegistro;
 
-  @OneToMany(mappedBy = "cliente_id", fetch = FetchType.LAZY)
-  private List<Pedido> pedidos;
+  @OneToMany(mappedBy = "cliente", fetch = FetchType.LAZY)
+  private List<Pedido> pedidos = new ArrayList<>();
 
   public Cliente() {
   }
@@ -57,7 +60,18 @@ public class Cliente {
     this.direccion = direccion;
   }
 
+  /*public Cliente(String nombre, String apellido, String correo, String telefono, String rol, String direccion) {
+    this.nombre = nombre;
+    this.apellido = apellido;
+    this.correo = correo;
+    this.telefono = telefono;
+    this.rol = rol;
+    this.direccion = direccion;
+
+  }*/
+
   // GETTERS Y SETTERS
+
 
   public Long getId() {
     return id;

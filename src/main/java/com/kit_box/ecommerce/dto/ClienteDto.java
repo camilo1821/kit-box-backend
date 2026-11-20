@@ -15,47 +15,64 @@ public class ClienteDto {
   private String rol;
   private String direccion;
   private LocalDateTime fechaRegistro;
+  private String contrasenia;
+
 
   public ClienteDto() {
   }
 
-  public ClienteDto(Long id,
-                    String nombre,
-                    String apellido,
-                    String correo,
-                    String telefono,
-                    String rol,
-                    String direccion,
-                    LocalDateTime fechaRegistro) {
-
+  public ClienteDto(
+          Long id,
+          String nombre,
+          String apellido,
+          String correo,
+          String telefono,
+          String contrasenia,
+          String rol,
+          String direccion,
+          LocalDateTime fechaRegistro
+          ) {
     this.id = id;
     this.nombre = nombre;
     this.apellido = apellido;
     this.correo = correo;
     this.telefono = telefono;
+    this.contrasenia = contrasenia;
     this.rol = rol;
     this.direccion = direccion;
     this.fechaRegistro = fechaRegistro;
+
   }
 
-  // CONVERTIR DTO A ENTITY
+// CONVERTIR DTO A ENTITY
+
+  public static ClienteDto fromEntity(Cliente cliente) {
+    return new ClienteDto(
+            cliente.getId(),
+            cliente.getNombre(),
+            cliente.getApellido(),
+            cliente.getCorreo(),
+            cliente.getTelefono(),
+            cliente.getContrasenia(),
+            cliente.getRol(),
+            cliente.getDireccion(),
+            cliente.getFechaRegistro()
+
+    );
+  }
 
   public Cliente toEntity() {
 
-    Cliente cliente = new Cliente(
-        this.nombre,
-        this.apellido,
-        this.correo,
-        this.telefono,
-        null,
-        this.rol,
-        this.direccion
-    );
-
-    cliente.setFechaRegistro(this.fechaRegistro);
-
-    return cliente;
+    return new Cliente(
+            this.nombre,
+            this.apellido,
+            this.correo,
+            this.telefono,
+            this.contrasenia,
+            this.rol,
+            this.direccion);
   }
+
 
   // GETTERS Y SETTERS
 
@@ -121,5 +138,13 @@ public class ClienteDto {
 
   public void setFechaRegistro(LocalDateTime fechaRegistro) {
     this.fechaRegistro = fechaRegistro;
+  }
+
+  public String getContrasenia() {
+    return contrasenia;
+  }
+
+  public void setContrasenia(String contrasenia) {
+    this.contrasenia = contrasenia;
   }
 }

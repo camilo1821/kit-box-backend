@@ -27,16 +27,16 @@ public class Pedido {
 
     @ManyToOne(fetch=FetchType.LAZY)
     @JoinColumn(name="cliente_id", nullable = false)
-    private Cliente cliente_id;
+    private Cliente cliente;
 
     public Pedido() {
     }
 
-    public Pedido(double totalPedido, String direccionEntrega, LocalDateTime fechaPedido, Cliente cliente_id) {
+    public Pedido(double totalPedido, String direccionEntrega, LocalDateTime fechaPedido, Cliente cliente) {
         this.total_pedido = total_pedido;
         this.direccion_entrega = direccion_entrega;
         this.fecha_pedido = fecha_pedido;
-        this.cliente_id = cliente_id;
+        this.cliente = cliente;
     }
 
    /* public Pedido(Long id, double total_pedido, String direccion_entrega,
@@ -84,11 +84,11 @@ public class Pedido {
         this.fecha_pedido = fecha_pedido;
     }
 
-    public Cliente getCliente_id() {
-        return cliente_id;
+    public Cliente getCliente() {
+        return cliente;
     }
 
-    public void setCliente_id(Cliente cliente_id) {
-        this.cliente_id = cliente_id;
+    public void setCliente(Cliente cliente) {
+        this.cliente = cliente;
     }
 }
