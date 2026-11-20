@@ -1,5 +1,6 @@
 package com.kit_box.ecommerce.dto;
 
+import com.kit_box.ecommerce.model.Cliente;
 import com.kit_box.ecommerce.model.Pedido;
 
 import java.time.LocalDate;
@@ -11,14 +12,14 @@ public class PedidoDTO {
     private double total_pedido;
     private String direccion_entrega;
     private LocalDateTime fecha_pedido;
-    private Long cliente_id;
+    private Cliente cliente_id;
 
     public PedidoDTO() {
     }
 
     public PedidoDTO(Long id, double total_pedido,
                      String direccion_entrega,
-                     LocalDateTime fecha_pedido,  Long cliente_id) {
+                     LocalDateTime fecha_pedido,  Cliente cliente_id) {
         this.id = id;
         this.total_pedido = total_pedido;
         this.direccion_entrega = direccion_entrega;
