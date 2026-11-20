@@ -38,7 +38,7 @@ public class Cliente {
   @Column(name = "fecha_registro", nullable = false, updatable = false)
   private LocalDateTime fechaRegistro;
 
-  @OneToMany(mappedBy = "cliente", fetch = FetchType.LAZY)
+  @OneToMany(mappedBy = "cliente_id", fetch = FetchType.LAZY)
   private List<Pedido> pedidos;
 
   public Cliente() {

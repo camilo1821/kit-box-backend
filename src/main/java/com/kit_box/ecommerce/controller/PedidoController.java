@@ -42,7 +42,7 @@ public class PedidoController {
         return PedidoDTO.fromEntity(pedidoService.findById(id));
     }
 
-    @GetMapping("/estado/{estado]")
+    @GetMapping("/estado/{estado}")
     public List<PedidoDTO> getPedidosByEstado(@PathVariable String estado) {
         return pedidoService.findByEstado(estado)
                 .stream()
