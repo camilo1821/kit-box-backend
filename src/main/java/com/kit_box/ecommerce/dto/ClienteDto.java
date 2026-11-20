@@ -2,7 +2,7 @@
 package com.kit_box.ecommerce.dto;
 
 import com.kit_box.ecommerce.model.Cliente;
-
+import com.fasterxml.jackson.annotation.JsonProperty;
 import java.time.LocalDateTime;
 
 public class ClienteDto {
@@ -15,6 +15,8 @@ public class ClienteDto {
   private String rol;
   private String direccion;
   private LocalDateTime fechaRegistro;
+
+  @JsonProperty(access = JsonProperty.Access.WRITE_ONLY)
   private String contrasenia;
 
 
@@ -27,7 +29,6 @@ public class ClienteDto {
           String apellido,
           String correo,
           String telefono,
-          String contrasenia,
           String rol,
           String direccion,
           LocalDateTime fechaRegistro
@@ -37,7 +38,6 @@ public class ClienteDto {
     this.apellido = apellido;
     this.correo = correo;
     this.telefono = telefono;
-    this.contrasenia = contrasenia;
     this.rol = rol;
     this.direccion = direccion;
     this.fechaRegistro = fechaRegistro;
@@ -53,7 +53,6 @@ public class ClienteDto {
             cliente.getApellido(),
             cliente.getCorreo(),
             cliente.getTelefono(),
-            cliente.getContrasenia(),
             cliente.getRol(),
             cliente.getDireccion(),
             cliente.getFechaRegistro()

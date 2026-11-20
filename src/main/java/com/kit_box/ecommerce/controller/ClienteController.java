@@ -24,10 +24,17 @@ public class ClienteController {
   }
 
   // REGISTRAR CLIENTE
-  @PostMapping
+  /*@PostMapping
   public ResponseEntity<Cliente> save( Cliente cliente) {
 
    return ResponseEntity.ok().body(clienteService.save(cliente));
+  }*/
+
+  @PostMapping
+  public ResponseEntity<ClienteDto> save(@RequestBody ClienteDto clienteDto) {
+    Cliente cliente = clienteDto.toEntity();
+    Cliente clienteGuardado = clienteService.save(cliente);
+    return ResponseEntity.status(HttpStatus.CREATED).body(fromEntity(clienteGuardado));
   }
 
   // ACTUALIZAR CLIENTE
