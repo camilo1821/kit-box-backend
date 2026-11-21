@@ -26,6 +26,7 @@ public class PedidoController {
     @Autowired
     public PedidoController(PedidoService pedidoService) {this.pedidoService = pedidoService; }
 
+    @GetMapping
     public Page<PedidoDTO> getAllPedidos(
             @RequestParam(defaultValue = "0") int page,
             @RequestParam(defaultValue = "10") int size,

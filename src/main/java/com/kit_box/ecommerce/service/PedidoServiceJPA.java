@@ -1,7 +1,10 @@
 package com.kit_box.ecommerce.service;
 
+import com.kit_box.ecommerce.model.Cliente;
 import com.kit_box.ecommerce.model.Pedido;
+import com.kit_box.ecommerce.repository.ClienteRepository;
 import com.kit_box.ecommerce.repository.PedidoRepository;
+import jakarta.persistence.EntityNotFoundException;
 import jakarta.transaction.Transactional;
 import org.springframework.beans.factory.annotation.Autowired;
 import org.springframework.context.annotation.Primary;
@@ -19,10 +22,11 @@ import java.util.Optional;
 public class PedidoServiceJPA implements PedidoService {
 
     private final PedidoRepository pedidoRepository;
-
+    private final ClienteRepository clienteRepository;
     @Autowired
-    public PedidoServiceJPA(PedidoRepository pedidoRepository) {
+    public PedidoServiceJPA(PedidoRepository pedidoRepository, ClienteRepository clienteRepository) {
         this.pedidoRepository = pedidoRepository;
+        this.clienteRepository = clienteRepository;
     }
 
     @Override
@@ -57,6 +61,14 @@ public class PedidoServiceJPA implements PedidoService {
     @Override
     @Transactional
     public Pedido save(Pedido pedido) {
+        /*if (pedido.getClienteId() == null || pedido.getClienteId() == null) {
+            throw new IllegalArgumentException("El ID del cliente es obligatorio para crear un pedido");
+        }
+
+        Cliente clienteGestionado = clienteRepository.findById(pedido.getClienteId())
+                .orElseThrow(() -> new EntityNotFoundException("Cliente no encontrado con ID: " + pedido.getClienteId()));
+
+        pedido.setCliente(clienteGestionado);*/
         return pedidoRepository.save(pedido);
     }
 
