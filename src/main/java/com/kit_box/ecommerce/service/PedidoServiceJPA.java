@@ -61,14 +61,14 @@ public class PedidoServiceJPA implements PedidoService {
     @Override
     @Transactional
     public Pedido save(Pedido pedido) {
-        /*if (pedido.getClienteId() == null || pedido.getClienteId() == null) {
-            throw new IllegalArgumentException("El ID del cliente es obligatorio para crear un pedido");
+        if (pedido.getCliente() == null || pedido.getCliente().getId() == null) {
+            throw new IllegalArgumentException("El ID del cliente es obligatorio");
         }
 
-        Cliente clienteGestionado = clienteRepository.findById(pedido.getClienteId())
-                .orElseThrow(() -> new EntityNotFoundException("Cliente no encontrado con ID: " + pedido.getClienteId()));
+        Cliente clienteReal = clienteRepository.findById(pedido.getCliente().getId())
+                .orElseThrow(() -> new EntityNotFoundException("Cliente no encontrado con ID: " + pedido.getCliente().getId()));
 
-        pedido.setCliente(clienteGestionado);*/
+        pedido.setCliente(clienteReal);
         return pedidoRepository.save(pedido);
     }
 

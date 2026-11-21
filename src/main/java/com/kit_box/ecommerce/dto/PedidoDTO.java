@@ -2,8 +2,6 @@ package com.kit_box.ecommerce.dto;
 
 import com.kit_box.ecommerce.model.Cliente;
 import com.kit_box.ecommerce.model.Pedido;
-
-import java.time.LocalDate;
 import java.time.LocalDateTime;
 
 public class PedidoDTO {
@@ -13,84 +11,66 @@ public class PedidoDTO {
     private String direccion_entrega;
     private LocalDateTime fecha_pedido;
     private String estado;
-    private Cliente cliente;
+    private Long clienteId;
 
     public PedidoDTO() {
     }
 
-    public PedidoDTO(Long id, double total_pedido,
-                     String direccion_entrega,
-                     LocalDateTime fecha_pedido, String estado, Cliente cliente) {
+    public PedidoDTO(Long id, double total_pedido, String direccion_entrega,
+                     LocalDateTime fecha_pedido, String estado, Long clienteId) {
         this.id = id;
         this.total_pedido = total_pedido;
         this.direccion_entrega = direccion_entrega;
         this.fecha_pedido = fecha_pedido;
         this.estado = estado;
-        this.cliente = cliente;
+        this.clienteId = clienteId;
     }
 
-    public static PedidoDTO fromEntity(Pedido pedido){
+    // ENTITY -> DTO: Solo extrae el número de ID, cortando el ciclo
+    public static PedidoDTO fromEntity(Pedido pedido) {
+        Long idDelCliente = (pedido.getCliente() != null) ? pedido.getCliente().getId() : null;
         return new PedidoDTO(
                 pedido.getId(),
                 pedido.getTotal_pedido(),
                 pedido.getDireccion_entrega(),
                 pedido.getFecha_pedido(),
                 pedido.getEstado(),
-                pedido.getCliente()
+                idDelCliente
         );
     }
 
+    // DTO -> ENTITY: Crea el Cliente temporal solo con su ID
     public Pedido toEntity() {
-        return new Pedido(this.total_pedido, this.direccion_entrega, this.fecha_pedido,this.estado, this.cliente);
+        Cliente clienteTemp = null;
+        if (this.clienteId != null) {
+            clienteTemp = new Cliente();
+            clienteTemp.setId(this.clienteId);
+        }
+        return new Pedido(
+                this.total_pedido,
+                this.direccion_entrega,
+                this.fecha_pedido != null ? this.fecha_pedido : LocalDateTime.now(),
+                this.estado != null ? this.estado : "PENDIENTE",
+                clienteTemp
+        );
     }
 
-    // GETTERS & SETTERS
+    // GETTERS Y SETTERS
+    public Long getId() { return id; }
+    public void setId(Long id) { this.id = id; }
 
-    public Long getId() {
-        return id;
-    }
+    public double getTotal_pedido() { return total_pedido; }
+    public void setTotal_pedido(double total_pedido) { this.total_pedido = total_pedido; }
 
-    public void setId(Long id) {
-        this.id = id;
-    }
+    public String getDireccion_entrega() { return direccion_entrega; }
+    public void setDireccion_entrega(String direccion_entrega) { this.direccion_entrega = direccion_entrega; }
 
-    public double getTotal_pedido() {
-        return total_pedido;
-    }
+    public LocalDateTime getFecha_pedido() { return fecha_pedido; }
+    public void setFecha_pedido(LocalDateTime fecha_pedido) { this.fecha_pedido = fecha_pedido; }
 
-    public void setTotal_pedido(double total_pedido) {
-        this.total_pedido = total_pedido;
-    }
+    public String getEstado() { return estado; }
+    public void setEstado(String estado) { this.estado = estado; }
 
-    public String getDireccion_entrega() {
-        return direccion_entrega;
-    }
-
-    public void setDireccion_entrega(String direccion_entrega) {
-        this.direccion_entrega = direccion_entrega;
-    }
-
-    public LocalDateTime getFecha_pedido() {
-        return fecha_pedido;
-    }
-
-    public void setFecha_pedido(LocalDateTime fecha_pedido) {
-        this.fecha_pedido = fecha_pedido;
-    }
-
-    public String getEstado() {
-        return estado;
-    }
-
-    public void setEstado(String estado) {
-        this.estado = estado;
-    }
-
-    public Cliente getCliente() {
-        return cliente;
-    }
-
-    public void setCliente(Cliente cliente) {
-        this.cliente = cliente;
-    }
+    public Long getClienteId() { return clienteId; }
+    public void setClienteId(Long clienteId) { this.clienteId = clienteId; }
 }
