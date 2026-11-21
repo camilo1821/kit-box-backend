@@ -3,6 +3,7 @@ package com.kit_box.ecommerce.model;
 
 import jakarta.persistence.*;
 import org.hibernate.annotations.CreationTimestamp;
+import com.fasterxml.jackson.annotation.JsonIgnore;
 
 import java.time.LocalDateTime;
 import java.util.ArrayList;
@@ -41,6 +42,7 @@ public class Cliente {
   @Column(name = "fecha_registro", nullable = false, updatable = false)
   private LocalDateTime fechaRegistro;
 
+  @JsonIgnore
   @OneToMany(mappedBy = "cliente", fetch = FetchType.LAZY)
   private List<Pedido> pedidos = new ArrayList<>();
 
