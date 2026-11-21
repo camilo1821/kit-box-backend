@@ -32,12 +32,21 @@ public class Pedido {
     public Pedido() {
     }
 
-    public Pedido(double totalPedido, String direccionEntrega, LocalDateTime fechaPedido, Cliente cliente) {
+    public Pedido(double total_pedido, String direccion_entrega, LocalDateTime fecha_pedido, String estado, Cliente cliente) {
         this.total_pedido = total_pedido;
         this.direccion_entrega = direccion_entrega;
         this.fecha_pedido = fecha_pedido;
+        this.estado = estado;
         this.cliente = cliente;
     }
+
+/*public Pedido(double totalPedido, String direccionEntrega, LocalDateTime fechaPedido, String estado, Cliente cliente) {
+        this.total_pedido = total_pedido;
+        this.direccion_entrega = direccion_entrega;
+        this.fecha_pedido = fecha_pedido;
+        this.estado = estado;
+        this.cliente = cliente;
+    }*/
 
    /* public Pedido(Long id, double total_pedido, String direccion_entrega,
                   LocalDateTime fecha_pedido, Long cliente_id) {
@@ -82,6 +91,14 @@ public class Pedido {
 
     public void setFecha_pedido(LocalDateTime fecha_pedido) {
         this.fecha_pedido = fecha_pedido;
+    }
+
+    public String getEstado() {
+        return estado;
+    }
+
+    public void setEstado(String estado) {
+        this.estado = estado;
     }
 
     public Cliente getCliente() {
