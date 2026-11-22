@@ -29,19 +29,23 @@ public class Producto {
     @Column(nullable = false)
     private String imagen;
 
+    @Column(nullable = false)
+    private boolean destacado;
+
     @OneToMany(mappedBy = "producto", fetch = FetchType.LAZY)
     private List<DetallePedido> detallePedidos = new ArrayList<>();
     public Producto(){
 
     }
 
-    public Producto(String nombre, String descripcion, double precio, String categoria, int stock, String imagen) {
+    public Producto(String nombre, String descripcion, double precio, String categoria, int stock, String imagen, boolean destacado) {
         this.nombre = nombre;
         this.descripcion = descripcion;
         this.precio = precio;
         this.categoria = categoria;
         this.stock = stock;
         this.imagen = imagen;
+        this.destacado= destacado;
     }
 
     public Long getId() {
@@ -98,5 +102,13 @@ public class Producto {
 
     public void setImagen(String imagen) {
         this.imagen = imagen;
+    }
+
+    public boolean isDestacado() {
+        return destacado;
+    }
+
+    public void setDestacado(boolean destacado) {
+        this.destacado = destacado;
     }
 }
