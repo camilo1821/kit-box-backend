@@ -11,12 +11,13 @@ public class ProductoDto {
     private String categoria;
     private int stock;
     private String imagen;
+    private boolean destacado;
 
     public ProductoDto(){
 
     }
 
-    public ProductoDto(Long id, String nombre, String descripcion, double precio, String categoria, int stock, String imagen) {
+    public ProductoDto(Long id, String nombre, String descripcion, double precio, String categoria, int stock, String imagen, boolean destacado) {
         this.id = id;
         this.nombre = nombre;
         this.descripcion = descripcion;
@@ -24,6 +25,7 @@ public class ProductoDto {
         this.categoria = categoria;
         this.stock = stock;
         this.imagen = imagen;
+        this.destacado = destacado;
     }
 
     public static ProductoDto fromEntity(Producto producto){
@@ -34,12 +36,13 @@ public class ProductoDto {
                 producto.getPrecio(),
                 producto.getCategoria(),
                 producto.getStock(),
-                producto.getImagen()
+                producto.getImagen(),
+                producto.isDestacado()
         );
     }
 
     public Producto toEntity(){
-        return new Producto(this.nombre,this.descripcion,this.precio,this.categoria,this.stock,this.imagen);
+        return new Producto(this.nombre,this.descripcion,this.precio,this.categoria,this.stock,this.imagen, this.destacado);
     }
 
     public Long getId() {
@@ -96,5 +99,13 @@ public class ProductoDto {
 
     public void setImagen(String imagen) {
         this.imagen = imagen;
+    }
+
+    public boolean isDestacado() {
+        return destacado;
+    }
+
+    public void setDestacado(boolean destacado) {
+        this.destacado = destacado;
     }
 }
