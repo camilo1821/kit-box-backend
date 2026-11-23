@@ -7,6 +7,7 @@ import org.springframework.beans.factory.annotation.Autowired;
 import org.springframework.data.domain.Page;
 import org.springframework.data.domain.Pageable;
 import org.springframework.data.web.PageableDefault;
+import org.springframework.security.access.prepost.PreAuthorize;
 import org.springframework.web.bind.annotation.*;
 
 import java.util.List;
@@ -18,17 +19,19 @@ import java.util.stream.Collectors;
 public class ProductoController {
     private final ProductoService productoService;
 
+
     @Autowired
     public ProductoController(ProductoService productoService) {
         this.productoService = productoService;
     }
 
+    @PreAuthorize("hasRole('ADMIN')")
     @PostMapping
     public ProductoDto save(@RequestBody ProductoDto productoDto) {
         Producto producto = productoDto.toEntity();
         return ProductoDto.fromEntity(productoService.save(producto));
     }
-
+    @PreAuthorize("hasRole('ADMIN')")
     @PutMapping("/{id}")
     public ProductoDto update(@PathVariable Long id, @RequestBody ProductoDto productoActualizado) {
         Producto producto = productoActualizado.toEntity();
@@ -54,7 +57,7 @@ public class ProductoController {
                 .map(ProductoDto::fromEntity)
                 .collect(Collectors.toList());
     }
-
+    @PreAuthorize("hasRole('ADMIN')")
     @DeleteMapping("/{id}")
     public void delete(@PathVariable Long id) {
     productoService.delete(id);
