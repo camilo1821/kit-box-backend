@@ -3,6 +3,8 @@ package com.kit_box.ecommerce.dto;
 
 import com.kit_box.ecommerce.model.Cliente;
 import com.fasterxml.jackson.annotation.JsonProperty;
+import com.kit_box.ecommerce.model.Rol;
+
 import java.time.LocalDateTime;
 
 public class ClienteDto {
@@ -12,7 +14,7 @@ public class ClienteDto {
   private String apellido;
   private String correo;
   private String telefono;
-  private String rol;
+  private Rol rol;
   private String direccion;
   private LocalDateTime fechaRegistro;
 
@@ -29,7 +31,7 @@ public class ClienteDto {
           String apellido,
           String correo,
           String telefono,
-          String rol,
+          Rol rol,
           String direccion,
           LocalDateTime fechaRegistro
           ) {
@@ -115,11 +117,11 @@ public class ClienteDto {
     this.telefono = telefono;
   }
 
-  public String getRol() {
+  public Rol getRol() {
     return rol;
   }
 
-  public void setRol(String rol) {
+  public void setRol(Rol rol) {
     this.rol = rol;
   }
 

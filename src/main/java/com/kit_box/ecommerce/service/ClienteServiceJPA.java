@@ -4,6 +4,7 @@ package com.kit_box.ecommerce.service;
 import com.kit_box.ecommerce.model.Cliente;
 import com.kit_box.ecommerce.repository.ClienteRepository;
 
+import org.springframework.security.core.userdetails.UserDetailsService;
 import org.springframework.stereotype.Service;
 
 import java.util.List;
@@ -11,6 +12,7 @@ import java.util.Optional;
 
 @Service
 public class ClienteServiceJPA implements ClienteService {
+
 
   private final ClienteRepository clienteRepository;
 

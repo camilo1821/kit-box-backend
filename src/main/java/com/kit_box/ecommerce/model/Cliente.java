@@ -32,8 +32,9 @@ public class Cliente {
   @Column(nullable = true, length = 255)
   private String contrasenia;
 
-  @Column(nullable = false, length = 50)
-  private String rol;
+  @Enumerated(EnumType.STRING)
+  @Column(nullable = false)
+  private Rol rol;
 
   @Column(length = 255)
   private String direccion;
@@ -50,7 +51,7 @@ public class Cliente {
   }
 
   public Cliente(String nombre, String apellido, String correo,
-                 String telefono, String contrasenia, String rol,
+                 String telefono, String contrasenia, Rol rol,
                  String direccion) {
 
     this.nombre = nombre;
@@ -123,11 +124,11 @@ public class Cliente {
     this.contrasenia = contrasenia;
   }
 
-  public String getRol() {
+  public Rol getRol() {
     return rol;
   }
 
-  public void setRol(String rol) {
+  public void setRol(Rol rol) {
     this.rol = rol;
   }
 
