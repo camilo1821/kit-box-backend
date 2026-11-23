@@ -32,7 +32,8 @@ public class Cliente {
   @Column(nullable = true, length = 255)
   private String contrasenia;
 
-  @Column(nullable = false, length = 50)
+  @Enumerated(EnumType.STRING)
+  @Column(nullable = false)
   private Rol rol;
 
   @Column(length = 255)
