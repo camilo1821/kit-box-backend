@@ -12,17 +12,28 @@ import org.springframework.data.domain.Page;
 import org.springframework.data.domain.Pageable;
 import org.springframework.stereotype.Service;
 
-import java.time.LocalDate;
 import java.time.LocalDateTime;
 import java.util.List;
-import java.util.Optional;
 
+/**
+ * Implementación del servicio de pedidos usando Spring Data JPA.
+ * <p>
+ * Gestiona la creación, actualización, consulta y eliminación de pedidos,
+ * validando que el cliente exista antes de guardar un pedido y marcándose
+ * como {@link Primary} para ser la implementación por defecto.
+ */
 @Service
 @Primary
 public class PedidoServiceJPA implements PedidoService {
 
     private final PedidoRepository pedidoRepository;
     private final ClienteRepository clienteRepository;
+
+    /**
+     * Constructor con inyección de dependencias.
+     * @param pedidoRepository repositorio de pedidos
+     * @param clienteRepository repositorio de clientes para validación
+     */
     @Autowired
     public PedidoServiceJPA(PedidoRepository pedidoRepository, ClienteRepository clienteRepository) {
         this.pedidoRepository = pedidoRepository;
@@ -58,6 +69,10 @@ public class PedidoServiceJPA implements PedidoService {
         pedidoRepository.deleteById(id);
     }
 
+    /**
+     * Guarda un nuevo pedido tras validar que el cliente asociado existe.
+     * Carga el cliente real desde la base de datos para mantener la integridad referencial.
+     */
     @Override
     @Transactional
     public Pedido save(Pedido pedido) {
@@ -72,6 +87,9 @@ public class PedidoServiceJPA implements PedidoService {
         return pedidoRepository.save(pedido);
     }
 
+    /**
+     * Actualiza un pedido existente preservando su ID original.
+     */
     @Override
     @Transactional
     public Pedido update(Long id, Pedido pedidoActualizado) {

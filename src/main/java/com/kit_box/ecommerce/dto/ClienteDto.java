@@ -5,6 +5,12 @@ import com.kit_box.ecommerce.model.Cliente;
 import com.fasterxml.jackson.annotation.JsonProperty;
 import java.time.LocalDateTime;
 
+/**
+ * DTO (Data Transfer Object) para la entidad {@link Cliente}.
+ * <p>
+ * Se utiliza para transferir datos entre el controlador y el cliente,
+ * excluyendo la contraseña en la respuesta JSON (WRITE_ONLY).
+ */
 public class ClienteDto {
 
   private Long id;
@@ -16,6 +22,7 @@ public class ClienteDto {
   private String direccion;
   private LocalDateTime fechaRegistro;
 
+  /** Contraseña solo se acepta en peticiones de escritura, nunca se expone en respuestas. */
   @JsonProperty(access = JsonProperty.Access.WRITE_ONLY)
   private String contrasenia;
 
@@ -44,8 +51,7 @@ public class ClienteDto {
 
   }
 
-// CONVERTIR DTO A ENTITY
-
+  /** Convierte una entidad Cliente a su DTO correspondiente. */
   public static ClienteDto fromEntity(Cliente cliente) {
     return new ClienteDto(
             cliente.getId(),
@@ -60,6 +66,7 @@ public class ClienteDto {
     );
   }
 
+  /** Convierte este DTO a una entidad Cliente. */
   public Cliente toEntity() {
 
     return new Cliente(

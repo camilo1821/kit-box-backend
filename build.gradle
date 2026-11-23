@@ -1,6 +1,13 @@
+// =====================================================================
+// Kit-Box E-commerce - Configuración de construcción con Gradle
+// =====================================================================
+
 plugins {
+	// Plugin para proyectos Java
 	id 'java'
+	// Plugin de Spring Boot para empaquetado y ejecución
 	id 'org.springframework.boot' version '4.1.2'
+	// Gestión centralizada de dependencias de Spring
 	id 'io.spring.dependency-management' version '1.1.7'
 }
 
@@ -8,24 +15,31 @@ group = 'com.kit-box'
 version = '0.0.1-SNAPSHOT'
 
 java {
+	// Requiere Java 21 para compilar y ejecutar
 	toolchain {
 		languageVersion = JavaLanguageVersion.of(21)
 	}
 }
 
 repositories {
+	// Repositorio Maven Central para descargar dependencias
 	mavenCentral()
 }
 
 dependencies {
+	// Spring Data JPA - acceso a base de datos con Hibernate
 	implementation 'org.springframework.boot:spring-boot-starter-data-jpa'
+	// Spring Web MVC - API REST con controladores
 	implementation 'org.springframework.boot:spring-boot-starter-webmvc'
+	// Driver de MySQL - conexión a base de datos (solo runtime)
 	runtimeOnly 'com.mysql:mysql-connector-j'
+	// Dependencias de prueba
 	testImplementation 'org.springframework.boot:spring-boot-starter-data-jpa-test'
 	testImplementation 'org.springframework.boot:spring-boot-starter-webmvc-test'
 	testRuntimeOnly 'org.junit.platform:junit-platform-launcher'
 }
 
+// Configura las pruebas para usar JUnit 5 (Platform)
 tasks.named('test') {
 	useJUnitPlatform()
 }

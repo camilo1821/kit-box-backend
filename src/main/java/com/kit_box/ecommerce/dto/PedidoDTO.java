@@ -4,6 +4,12 @@ import com.kit_box.ecommerce.model.Cliente;
 import com.kit_box.ecommerce.model.Pedido;
 import java.time.LocalDateTime;
 
+/**
+ * DTO (Data Transfer Object) para la entidad {@link Pedido}.
+ * <p>
+ * Usa solo el ID del cliente (clienteId) en lugar del objeto completo
+ * para evitar referencias circulares en la serialización JSON.
+ */
 public class PedidoDTO {
 
     private Long id;
@@ -26,7 +32,7 @@ public class PedidoDTO {
         this.clienteId = clienteId;
     }
 
-    // ENTITY -> DTO: Solo extrae el número de ID, cortando el ciclo
+    /** Convierte una entidad Pedido a su DTO, extrayendo solo el ID del cliente para evitar ciclos. */
     public static PedidoDTO fromEntity(Pedido pedido) {
         Long idDelCliente = (pedido.getCliente() != null) ? pedido.getCliente().getId() : null;
         return new PedidoDTO(
@@ -39,7 +45,7 @@ public class PedidoDTO {
         );
     }
 
-    // DTO -> ENTITY: Crea el Cliente temporal solo con su ID
+    /** Convierte este DTO a una entidad Pedido, creando un Cliente temporal con solo su ID. */
     public Pedido toEntity() {
         Cliente clienteTemp = null;
         if (this.clienteId != null) {

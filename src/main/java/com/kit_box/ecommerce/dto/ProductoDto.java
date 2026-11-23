@@ -2,6 +2,11 @@ package com.kit_box.ecommerce.dto;
 
 import com.kit_box.ecommerce.model.Producto;
 
+/**
+ * DTO (Data Transfer Object) para la entidad {@link Producto}.
+ * <p>
+ * Se utiliza para transferir datos de productos entre el controlador y el cliente.
+ */
 public class ProductoDto {
 
     private Long id;
@@ -28,6 +33,7 @@ public class ProductoDto {
         this.destacado = destacado;
     }
 
+    /** Convierte una entidad Producto a su DTO correspondiente. */
     public static ProductoDto fromEntity(Producto producto){
         return new ProductoDto(
             producto.getId(),
@@ -41,6 +47,7 @@ public class ProductoDto {
         );
     }
 
+    /** Convierte este DTO a una entidad Producto. */
     public Producto toEntity(){
         return new Producto(this.nombre,this.descripcion,this.precio,this.categoria,this.stock,this.imagen, this.destacado);
     }

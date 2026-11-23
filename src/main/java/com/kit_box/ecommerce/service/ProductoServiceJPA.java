@@ -10,10 +10,20 @@ import org.springframework.stereotype.Service;
 import java.util.List;
 import java.util.Optional;
 
+/**
+ * Implementación del servicio de productos usando Spring Data JPA.
+ * <p>
+ * Delega las operaciones al {@link ProductoRepository} y aplica la lógica
+ * de negocio para actualizar campos específicos y validar existencia.
+ */
 @Service
 public class ProductoServiceJPA implements ProductoService{
     private final ProductoRepository productoRepository;
 
+    /**
+     * Constructor con inyección de dependencias.
+     * @param productoRepository repositorio de productos
+     */
     @Autowired
     public ProductoServiceJPA(ProductoRepository productoRepository) {
         this.productoRepository = productoRepository;
@@ -24,6 +34,11 @@ public class ProductoServiceJPA implements ProductoService{
         return productoRepository.save(producto);
     }
 
+    /**
+     * Actualiza un producto copiando los campos del producto actualizado
+     * sobre el producto existente en la base de datos.
+     * Esto preserva el ID y cualquier otra relación no especificada.
+     */
     @Override
     public Producto update(Long id, Producto productoActualizado) {
         Producto productoExistente = productoRepository.findById(id)
@@ -37,8 +52,6 @@ public class ProductoServiceJPA implements ProductoService{
 
         return productoRepository.save(productoExistente);
     }
-
-
 
     @Override
     public Page<Producto> findAll(Pageable pageable) {
@@ -59,7 +72,7 @@ public class ProductoServiceJPA implements ProductoService{
     public void delete(Long id) {
         if(!productoRepository.existsById(id)){
             throw new RuntimeException("Producto no encontrado con id "+ id);
-        }productoRepository.deleteById(id);
-
+        }
+        productoRepository.deleteById(id);
     }
 }

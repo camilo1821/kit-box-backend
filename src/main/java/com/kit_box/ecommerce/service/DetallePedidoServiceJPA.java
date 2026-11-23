@@ -14,12 +14,29 @@ import org.springframework.transaction.annotation.Transactional;
 
 import java.util.List;
 
+/**
+ * Implementación del servicio de detalles de pedido usando Spring Data JPA.
+ * <p>
+ * Gestiona las líneas de detalle dentro de un pedido, incluyendo:
+ * <ul>
+ *   <li>Validación de stock antes de crear o actualizar detalles</li>
+ *   <li>Cálculo automático del precio total (precio × cantidad)</li>
+ *   <li>Recálculo automático del total del pedido tras cada cambio</li>
+ * </ul>
+ */
 @Service
 public class DetallePedidoServiceJPA implements DetallePedidoService {
 
     private final DetallePedidoRepository detallePedidoRepository;
     private final ProductoRepository productoRepository;
     private final PedidoRepository pedidoRepository;
+
+    /**
+     * Constructor con inyección de dependencias.
+     * @param detallePedidoRepository repositorio de detalles de pedido
+     * @param productoRepository repositorio de productos para validación de stock
+     * @param pedidoRepository repositorio de pedidos para recalcular totales
+     */
     @Autowired
     public DetallePedidoServiceJPA(DetallePedidoRepository detallePedidoRepository,
                                    ProductoRepository productoRepository,
@@ -58,6 +75,15 @@ public class DetallePedidoServiceJPA implements DetallePedidoService {
         return DetallePedidoDTO.fromEntity(detalle);
     }
 
+    /**
+     * Crea un nuevo detalle de pedido con validaciones:
+     * <ul>
+     *   <li>Verifica que el producto y la cantidad sean válidos</li>
+     *   <li>Comprueba que haya stock suficiente</li>
+     *   <li>Calcula el precio total (precio unitario × cantidad)</li>
+     *   <li>Recalcula el total del pedido</li>
+     * </ul>
+     */
     @Override
     @Transactional
     public DetallePedidoDTO crearDetalle(Long pedidoId, DetallePedidoDTO dto) {
@@ -94,6 +120,10 @@ public class DetallePedidoServiceJPA implements DetallePedidoService {
         return DetallePedidoDTO.fromEntity(guardado);
     }
 
+    /**
+     * Actualiza la cantidad de un detalle existente, validando stock
+     * y recalculando el precio total y el total del pedido.
+     */
     @Override
     @Transactional
     public DetallePedidoDTO actualizarCantidad(Long id, DetallePedidoDTO dto) {
@@ -119,6 +149,9 @@ public class DetallePedidoServiceJPA implements DetallePedidoService {
         return DetallePedidoDTO.fromEntity(actualizado);
     }
 
+    /**
+     * Elimina un detalle de pedido y recalcula el total del pedido asociado.
+     */
     @Override
     @Transactional
     public void eliminarDetalle(Long id) {
@@ -133,7 +166,12 @@ public class DetallePedidoServiceJPA implements DetallePedidoService {
         recalcularTotalPedido(pedido);
     }
 
-    //BAck calcular total
+    /**
+     * Recalcula el total de un pedido sumando los precios totales de todos sus detalles.
+     * Se invoca automáticamente tras crear, actualizar o eliminar un detalle.
+     *
+     * @param pedido pedido cuyo total se debe recalcular
+     */
     private void recalcularTotalPedido(Pedido pedido) {
         List<DetallePedido> detalles = detallePedidoRepository.findByPedidoId(pedido.getId());
 

@@ -9,46 +9,82 @@ import java.time.LocalDateTime;
 import java.util.ArrayList;
 import java.util.List;
 
+/**
+ * Entidad que representa un cliente del sistema de e-commerce.
+ * <p>
+ * Cada cliente puede realizar múltiples pedidos, los cuales se gestionan
+ * a través de la relación OneToMany con la entidad {@link Pedido}.
+ * <p>
+ * Mapeada a la tabla {@code cliente} en la base de datos MySQL.
+ */
 @Entity
 @Table(name = "cliente")
 public class Cliente {
 
+  /** Identificador único del cliente, generado automáticamente. */
   @Id
   @GeneratedValue(strategy = GenerationType.IDENTITY)
   private Long id;
 
+  /** Nombre del cliente (obligatorio, máximo 100 caracteres). */
   @Column(nullable = false, length = 100)
   private String nombre;
 
+  /** Apellido del cliente (opcional, máximo 100 caracteres). */
   @Column(nullable = true, length = 100)
   private String apellido;
 
+  /**
+   * Correo electrónico del cliente (obligatorio y único, máximo 150 caracteres).
+   * Se utiliza como identificador único para el login.
+   */
   @Column(nullable = false, unique = true, length = 150)
   private String correo;
 
+  /** Número de teléfono del cliente (opcional, máximo 20 caracteres). */
   @Column(length = 20)
   private String telefono;
 
+  /** Contraseña del cliente para autenticación (opcional, máximo 255 caracteres). */
   @Column(nullable = true, length = 255)
   private String contrasenia;
 
+  /** Rol del cliente en el sistema (ej: "USER", "ADMIN"), máximo 50 caracteres. */
   @Column(nullable = false, length = 50)
   private String rol;
 
+  /** Dirección de entrega del cliente (opcional, máximo 255 caracteres). */
   @Column(length = 255)
   private String direccion;
 
+  /** Fecha y hora de registro del cliente, establecida automáticamente al crearlo. */
   @CreationTimestamp
   @Column(name = "fecha_registro", nullable = false, updatable = false)
   private LocalDateTime fechaRegistro;
 
+  /**
+   * Lista de pedidos realizados por este cliente.
+   * Se ignora en la serialización JSON para evitar referencias circulares.
+   */
   @JsonIgnore
   @OneToMany(mappedBy = "cliente", fetch = FetchType.LAZY)
   private List<Pedido> pedidos = new ArrayList<>();
 
+  /** Constructor por defecto requerido por JPA. */
   public Cliente() {
   }
 
+  /**
+   * Constructor con todos los campos excepto id y fechaRegistro.
+   *
+   * @param nombre     nombre del cliente
+   * @param apellido   apellido del cliente
+   * @param correo     correo electrónico único
+   * @param telefono   número de teléfono
+   * @param contrasenia contraseña para autenticación
+   * @param rol        rol en el sistema (USER, ADMIN)
+   * @param direccion  dirección de entrega
+   */
   public Cliente(String nombre, String apellido, String correo,
                  String telefono, String contrasenia, String rol,
                  String direccion) {
@@ -62,17 +98,9 @@ public class Cliente {
     this.direccion = direccion;
   }
 
-  /*public Cliente(String nombre, String apellido, String correo, String telefono, String rol, String direccion) {
-    this.nombre = nombre;
-    this.apellido = apellido;
-    this.correo = correo;
-    this.telefono = telefono;
-    this.rol = rol;
-    this.direccion = direccion;
-
-  }*/
-
+  // ------------------------------------------------------------------
   // GETTERS Y SETTERS
+  // ------------------------------------------------------------------
 
 
   public Long getId() {
