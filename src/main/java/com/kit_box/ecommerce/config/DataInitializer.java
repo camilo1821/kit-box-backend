@@ -20,7 +20,7 @@ public class DataInitializer implements CommandLineRunner {
 
     @Override
     public void run(String... args) throws Exception{
-        if(clienteRepository.findByCorreo("admin").isEmpty()){
+        if(clienteRepository.findByCorreo("admin@kitbox.com").isEmpty()){
             Cliente admin = new Cliente();
             admin.setNombre("Admin KitBox");
             admin.setCorreo("admin@kitbox.com");
