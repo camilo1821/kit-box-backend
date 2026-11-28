@@ -38,13 +38,39 @@ public class ClienteController {
   }*/
 
   // ACTUALIZAR CLIENTE
-  @PutMapping("/{id}")
+  /*@PutMapping("/{id}")
   public ResponseEntity<ClienteDto> update(
       @PathVariable Long id,
       @RequestBody ClienteDto clienteDto) {
 
     Cliente cliente = clienteDto.toEntity();
 
+    Cliente clienteActualizado = clienteService.update(id, cliente);
+
+    if (clienteActualizado == null) {
+      return ResponseEntity.notFound().build();
+    }
+
+    return ResponseEntity.ok(fromEntity(clienteActualizado));
+  }*/
+  // ACTUALIZAR CLIENTE
+  @PutMapping("/{id}")
+  public ResponseEntity<?> update(
+          @PathVariable Long id,
+          @RequestBody ClienteDto clienteDto) {
+
+    // Validar que el correo nuevo no esté ocupado por otro cliente
+    if (clienteDto.getCorreo() != null && !clienteDto.getCorreo().isBlank()) {
+      String correoLimpio = clienteDto.getCorreo().trim().toLowerCase();
+      var clienteExistenteConCorreo = clienteService.findByEmail(correoLimpio);
+
+      if (clienteExistenteConCorreo.isPresent() && !clienteExistenteConCorreo.get().getId().equals(id)) {
+        return ResponseEntity.status(HttpStatus.CONFLICT)
+                .body("Este correo ya está registrado por otro usuario.");
+      }
+    }
+
+    Cliente cliente = clienteDto.toEntity();
     Cliente clienteActualizado = clienteService.update(id, cliente);
 
     if (clienteActualizado == null) {

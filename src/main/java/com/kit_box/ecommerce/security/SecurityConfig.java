@@ -38,6 +38,7 @@ public class SecurityConfig {
                                 "/api/cliente/**").permitAll()
                         .requestMatchers(HttpMethod.POST, "/api/cliente/**").permitAll()
                         .requestMatchers("/api/pedidos/**").authenticated()
+                        .requestMatchers(HttpMethod.OPTIONS, "/**").permitAll()
                         .anyRequest().authenticated()
                 )
                 .addFilterBefore(jwtFilter, UsernamePasswordAuthenticationFilter.class);
